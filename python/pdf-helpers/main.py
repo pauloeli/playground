@@ -1,18 +1,24 @@
 import os
 import tkinter as tk
-from tkinter import filedialog
-from tkinter import messagebox
-
+from tkinter import filedialog, messagebox
 import PyPDF2
 from PIL import Image
 from tabula.io import convert_into
 
+# Initialize main window
 window = tk.Tk()
 window.title("PDF Python Helpers")
-window.geometry("500x200")
+window.geometry("470x250")
 window.resizable(False, False)
 
-description_label = tk.Label(window, text="Choose a function to proceed:")
+# Add a main frame
+main_frame = tk.Frame(window, padx=10, pady=10)
+main_frame.pack(expand=True, fill='both')
+
+# Title and description
+title_label = tk.Label(main_frame, text="PDF Python Helpers", font=("Helvetica", 16, "bold"))
+title_label.pack(pady=10)
+description_label = tk.Label(main_frame, text="Choose a function to proceed:", font=("Helvetica", 12))
 description_label.pack(pady=10)
 
 
@@ -79,13 +85,18 @@ def select_pdfs():
         messagebox.showerror("Error", f"An error occurred: {e}")
 
 
-select_button = tk.Button(window, text="Convert PDF to CSV", command=select_file)
-select_button.pack(side='top', fill='x', padx=50, pady=5)
+# Create buttons and place them in a button frame
+button_frame = tk.Frame(main_frame)
+button_frame.pack(fill='x', pady=10)
 
-images_button = tk.Button(window, text="Create PDF from Images", command=select_images)
-images_button.pack(side='top', fill='x', padx=50, pady=5)
+select_button = tk.Button(button_frame, text="Convert PDF to CSV", command=select_file, width=25)
+select_button.grid(row=0, column=0, padx=10, pady=5)
 
-merge_button = tk.Button(window, text="Merge PDFs", command=select_pdfs)
-merge_button.pack(side='top', fill='x', padx=50, pady=5)
+images_button = tk.Button(button_frame, text="Create PDF from Images", command=select_images, width=25)
+images_button.grid(row=0, column=1, padx=10, pady=5)
 
+merge_button = tk.Button(button_frame, text="Merge PDFs", command=select_pdfs, width=25)
+merge_button.grid(row=1, column=0, columnspan=2, pady=5)
+
+# Run the Tkinter event loop
 window.mainloop()
